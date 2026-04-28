@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regras de Boa Convivência – Bloco 1</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f5f0f4;
+      color: #2a1a28;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3a1030 0%, #5a2050 55%, #7a3070 100%);
+      color: #fff;
+      text-align: center;
+      padding: 2.5rem 1.25rem 2rem;
+    }
+
+    header .logo {
+      display: block;
+      width: clamp(80px, 22vw, 130px);
+      height: auto;
+      margin: 0 auto .75rem;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    header h1 {
+      font-size: clamp(1.4rem, 5vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -.5px;
+    }
+
+    header p {
+      margin-top: .4rem;
+      font-size: clamp(.85rem, 3.5vw, 1rem);
+      opacity: .8;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 1.75rem auto;
+      padding: 0 1rem 3rem;
+    }
+
+    .intro {
+      background: #fff;
+      border-left: 5px solid #c0407a;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      font-size: .95rem;
+      color: #444;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    /* ── Seção colapsável ── */
+    .section { margin-top: .65rem; }
+
+    .section-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .5rem;
+      background: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: .75rem 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #7a2d68;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+      transition: background .15s, box-shadow .15s;
+      min-height: 48px;
+      text-align: left;
+    }
+
+    @media (hover: hover) {
+      .section-toggle:hover {
+        background: #fdf5fb;
+        box-shadow: 0 2px 10px rgba(122,45,104,.12);
+      }
+    }
+
+    .section-toggle:active { background: #f7eaf4; }
+
+    .section-toggle .toggle-label { flex: 1; }
+
+    .chevron {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: #c0407a;
+      transition: transform .3s ease;
+    }
+
+    .section.open .chevron { transform: rotate(180deg); }
+
+    /* animação de abertura via grid-template-rows */
+    .section-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .3s ease;
+    }
+
+    .section.open .section-body {
+      grid-template-rows: 1fr;
+    }
+
+    .section-body-inner {
+      overflow: hidden;
+    }
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+      gap: .85rem;
+      padding: .75rem .1rem .25rem;
+    }
+
+    .rule-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      display: flex;
+      gap: .85rem;
+      align-items: flex-start;
+      box-shadow: 0 2px 10px rgba(0,0,0,.07);
+      transition: transform .15s, box-shadow .15s;
+      min-height: 44px;
+    }
+
+    .rule-card:active { transform: scale(.98); }
+
+    @media (hover: hover) {
+      .rule-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0,0,0,.12);
+      }
+    }
+
+    .rule-card .icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .rule-card h3 {
+      font-size: .93rem;
+      font-weight: 600;
+      margin-bottom: .2rem;
+      color: #3a1535;
+    }
+
+    .rule-card p {
+      font-size: .855rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* ── WhatsApp ── */
+    .whatsapp-section {
+      margin-top: 2.5rem;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      border-radius: 16px;
+      padding: 2rem 1.25rem;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(37,211,102,.3);
+    }
+
+    .whatsapp-section h2 {
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0;
+      margin: 0 0 .5rem;
+      color: #fff;
+    }
+
+    .whatsapp-section p {
+      font-size: clamp(.85rem, 3.5vw, .95rem);
+      opacity: .9;
+      margin-bottom: 1.5rem;
+    }
+
+    #qrcode {
+      display: inline-block;
+      background: #fff;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      margin-bottom: 1.25rem;
+      max-width: 100%;
+    }
+
+    #qrcode img,
+    #qrcode canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .wa-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      background: #fff;
+      color: #128c7e;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: .9rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,.15);
+      transition: transform .15s, box-shadow .15s;
+      min-height: 48px;
+    }
+
+    @media (hover: hover) {
+      .wa-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 18px rgba(0,0,0,.2);
+      }
+    }
+
+    .wa-btn:active { transform: scale(.97); }
+
+    footer {
+      text-align: center;
+      padding: 1.25rem 1rem;
+      font-size: .8rem;
+      color: #999;
+    }
+
+    /* ── Mobile (<= 480px) ── */
+    @media (max-width: 480px) {
+      header { padding: 2rem 1rem 1.75rem; }
+      main { margin-top: 1.25rem; padding: 0 .85rem 2.5rem; }
+      .intro { font-size: .9rem; padding: .9rem 1rem; }
+      .section-toggle { font-size: .95rem; }
+      .rules-grid { gap: .75rem; }
+      .rule-card { padding: .9rem 1rem; }
+      .whatsapp-section { border-radius: 12px; padding: 1.75rem 1rem; }
+      .wa-btn { width: 100%; font-size: .97rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="images.png" alt="Logo do Condomínio" />
+  <h1>Regras de Boa Convivência</h1>
+  <p>Viver bem juntos começa com pequenos gestos</p>
+</header>
+
+<main>
+
+  <div class="intro">
+    Prezados vizinhos, estas regras foram criadas de forma colaborativa para que todos possamos desfrutar de um ambiente
+    tranquilo, seguro e agradável. O respeito mútuo é a base de uma boa convivência. Conte sempre com a cooperação de todos!
+  </div>
+
+  <div class="section">
+    <button class="section-toggle" aria-expanded="false">
+      <span class="toggle-label">🔇 Silêncio &amp; Horários</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="rules-grid">
+          <div class="rule-card">
+            <span class="icon">🌙</span>
+            <div>
+              <h3>Horário de silêncio</h3>
+              <p>Das 22h às 8h é período de silêncio. Evite barulhos altos, festas e reformas nesse intervalo.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">🔨</span>
+            <div>
+              <h3>Reformas e obras</h3>
+              <p>Obras são permitidas de segunda a sexta, das 8h às 18h, e sábados das 8h às 13h. Proibidas aos domingos e feriados.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">🎵</span>
+            <div>
+              <h3>Música e TV</h3>
+              <p>Mantenha o volume em nível moderado. Lembre-se que o som se propaga facilmente pelas paredes e lajes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <button class="section-toggle" aria-expanded="false">
+      <span class="toggle-label">🗑️ Limpeza &amp; Descarte</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="rules-grid">
+          <div class="rule-card">
+            <span class="icon">♻️</span>
+            <div>
+              <h3>Coleta seletiva</h3>
+              <p>Separe recicláveis do lixo orgânico. Utilize os coletores identificados no térreo.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">🛗</span>
+            <div>
+              <h3>Áreas comuns</h3>
+              <p>Mantenha corredores, escadas e hall limpos. Não deixe objetos bloqueando a circulação.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">🚬</span>
+            <div>
+              <h3>Cigarro e bitucas</h3>
+              <p>É proibido fumar nas áreas comuns fechadas. Descarte bitucas em locais apropriados, nunca no chão.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <button class="section-toggle" aria-expanded="false">
+      <span class="toggle-label">🐾 Animais de Estimação</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="rules-grid">
+          <div class="rule-card">
+            <span class="icon">🐕</span>
+            <div>
+              <h3>Circulação no bloco</h3>
+              <p>Animais devem circular no colo ou na guia pelas áreas comuns. Nunca soltos nos corredores ou elevadores.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">💩</span>
+            <div>
+              <h3>Dejetos</h3>
+              <p>Recolha sempre os dejetos do seu animal nas áreas externas. Deixe o ambiente limpo para todos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <button class="section-toggle" aria-expanded="false">
+      <span class="toggle-label">🚗 Garagem &amp; Estacionamento</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="rules-grid">
+          <div class="rule-card">
+            <span class="icon">🅿️</span>
+            <div>
+              <h3>Vagas demarcadas</h3>
+              <p>Utilize apenas a vaga de sua unidade. Não ocupe vagas alheias ou áreas de manobra.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">🚦</span>
+            <div>
+              <h3>Velocidade</h3>
+              <p>Trafegue devagar na garagem. A segurança de crianças e pedestres depende da sua atenção.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <button class="section-toggle" aria-expanded="false">
+      <span class="toggle-label">📦 Entregas &amp; Visitantes</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="rules-grid">
+          <div class="rule-card">
+            <span class="icon">📬</span>
+            <div>
+              <h3>Encomendas</h3>
+              <p>Retire suas encomendas da portaria rapidamente. Comunique ao porteiro quando aguardar uma entrega.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">🪑</span>
+            <div>
+              <h3>Festas e reuniões</h3>
+              <p>Avise os vizinhos próximos com antecedência. Respeite o limite de horário e o número de convidados.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <button class="section-toggle" aria-expanded="false">
+      <span class="toggle-label">🤝 Respeito Mútuo</span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="section-body">
+      <div class="section-body-inner">
+        <div class="rules-grid">
+          <div class="rule-card">
+            <span class="icon">💬</span>
+            <div>
+              <h3>Comunicação gentil</h3>
+              <p>Em caso de desconforto, converse com o vizinho de forma respeitosa antes de escalar para a administração.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">🌿</span>
+            <div>
+              <h3>janelas</h3>
+              <p>Não sacuda tapetes, jogue água ou outros itens para fora.</p>
+            </div>
+          </div>
+          <div class="rule-card">
+            <span class="icon">🔑</span>
+            <div>
+              <h3>Segurança coletiva</h3>
+              <p>Não abra o portão para desconhecidos. Comunique movimentações suspeitas ao porteiro imediatamente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WhatsApp Section -->
+  <div class="whatsapp-section">
+    <h2>📲 Entre no Grupo do WhatsApp</h2>
+    <p>Fique por dentro dos avisos, combine mutirões e fortaleça a comunidade do Bloco 1.</p>
+    <div id="qrcode"></div>
+    <br/>
+    <a class="wa-btn" href="https://chat.whatsapp.com/DwyIlkv7mAA2RT1RM7A9uU?mode=gi_t" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Entrar no grupo
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  Bloco 1 &mdash; Juntos por uma convivência melhor &hearts;
+</footer>
+
+<script>
+  new QRCode(document.getElementById("qrcode"), {
+    text: "https://chat.whatsapp.com/DwyIlkv7mAA2RT1RM7A9uU?mode=gi_t",
+    width: 200,
+    height: 200,
+    colorDark: "#128c7e",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  document.querySelectorAll('.section-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const section = btn.closest('.section');
+      const isOpen = section.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+    });
+  });
+</script>
+
+</body>
+</html>
