@@ -37,9 +37,8 @@ export default function AdminLogin() {
             <input
               id="pin"
               type="password"
-              inputMode="numeric"
               autoComplete="current-password"
-              maxLength={8}
+              maxLength={32}
               value={pin}
               onChange={e => setPin(e.target.value)}
               className={error ? 'input-error' : ''}
