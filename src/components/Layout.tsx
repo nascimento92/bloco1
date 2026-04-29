@@ -15,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <header className="site-header">
-        <img className="logo" src="/images.png" alt="Logo do Condomínio" />
+        <img className="logo" src={`${import.meta.env.BASE_URL}images.png`} alt="Logo do Condomínio" />
         <h1>Bloco 1</h1>
         <p>Regras de Boa Convivência</p>
       </header>
