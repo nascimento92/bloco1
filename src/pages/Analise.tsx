@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, Fragment } from 'react'
-import { TORRES, ANDARES, APTS, aptLabel } from '../config/building'
+import { TORRES, ANDARES, aptLabel } from '../config/building'
 import { getComplaints } from '../services/complaints'
 import { getResidents } from '../services/residents'
 import { computeSuspects, buildHeatmap } from '../lib/analysis'
