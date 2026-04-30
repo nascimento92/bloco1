@@ -1,15 +1,13 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-
-const ADMIN_PIN = import.meta.env.VITE_ADMIN_PIN ?? '1234'
+import { useAdmin } from '../hooks/useAdmin'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const isAdmin = sessionStorage.getItem('adminAuth') === ADMIN_PIN
+  const { isAdmin, logout } = useAdmin()
   const navigate = useNavigate()
 
   function handleLogout() {
-    sessionStorage.removeItem('adminAuth')
+    logout()
     navigate('/')
-    window.location.reload()
   }
 
   return (
