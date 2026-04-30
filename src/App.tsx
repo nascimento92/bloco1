@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
@@ -10,7 +10,7 @@ import Planta from './pages/Planta'
 
 export default function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -27,6 +27,6 @@ export default function App() {
           } />
         </Routes>
       </Layout>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
