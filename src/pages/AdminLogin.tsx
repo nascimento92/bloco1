@@ -12,12 +12,12 @@ export default function AdminLogin() {
 
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname ?? '/moradores'
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
 
-    if (login(pin)) {
+    if (await login(pin)) {
       navigate(from, { replace: true })
     } else {
       setError('PIN incorreto. Tente novamente.')

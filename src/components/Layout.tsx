@@ -1,10 +1,8 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
 
-const ADMIN_PIN = import.meta.env.VITE_ADMIN_PIN ?? '1234'
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   useLocation() // re-renderiza ao trocar de rota para reler o sessionStorage
-  const isAdmin = sessionStorage.getItem('adminAuth') === ADMIN_PIN
+  const isAdmin = sessionStorage.getItem('adminAuth') === 'authenticated'
   const navigate = useNavigate()
 
   function handleLogout() {
